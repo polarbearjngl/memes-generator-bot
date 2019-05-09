@@ -15,10 +15,10 @@ class Common(object):
 
     BOT_NAME = '@MemesGeneratorBot'
     BOT_LINK = 't.me/MemesGeneratorBot'
-    START_TEXT = "Чтобы начать создание мема наберите {name}, " \
-                 "нажмите пробел и выберите шаблон из результатов поиска. " \
-                 ":magnifying_glass_tilted_right: Для поиска определенных мемов по их названию " \
-                 "вводите текст (english only)".format(name=BOT_NAME)
+    START_TEXT = emojize("Чтобы начать создание мема наберите {name}, "
+                         "нажмите пробел и выберите шаблон из результатов поиска. "
+                         ":magnifying_glass_tilted_right: Для поиска определенных мемов по их названию "
+                         "вводите текст (english only)", use_aliases=True).format(name=BOT_NAME)
     SEND_TEXT = emojize("Отправьте текст, который будет добавлен в поле №{num} из {count}\n\n"
                         ":warning:Если текст в поле №{num} не нужен, то отправьте  '0' (ноль):warning:\n\n"
                         ":back:Отправьте /reset чтобы сбросить переданные данные и вернутся к началу",
