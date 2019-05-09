@@ -1,6 +1,7 @@
 import os
-
+import requests
 from chatbase import MessageSet, Message, MessageTypes
+from requests import HTTPError
 
 
 class Analytics(MessageSet):
@@ -27,4 +28,13 @@ class Analytics(MessageSet):
                                      type=type,
                                      not_handled=not_handled,
                                      time_stamp=time_stamp))
-        return self.messages[-1]
+
+    def send(self):
+        """Send the message set to the Chatbase API"""
+        try:
+            url = ("https://chatbase.com/api/messages?api_key=%s" % self.api_key)
+            requests.post(url,
+                          data=self.to_json(),
+                          headers=Message.get_content_type())
+        except HTTPError:
+            pass
