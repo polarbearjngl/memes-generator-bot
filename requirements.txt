@@ -1,0 +1,6 @@
+Pillow
+emoji
+requests
+python-telegram-bot
+requests-toolbelt
+git+https://github.com/polarbearjngl/chatbase-python
