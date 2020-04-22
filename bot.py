@@ -2,7 +2,7 @@ import logging
 import os
 from telegram.ext import (Updater, InlineQueryHandler, CommandHandler, ConversationHandler, MessageHandler, Filters)
 from bot import Common
-from bot.handlers import inline_query, start, call_help, photo, text
+from bot.handlers import inline_query, start, call_help, photo, text, send_template_with_numbers
 
 TOKEN = os.getenv("TOKEN")
 PORT = int(os.environ.get("PORT", "8443"))
@@ -42,6 +42,7 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler(Common.START, start, pass_user_data=True))
     dp.add_handler(CommandHandler(Common.HELP, call_help, pass_user_data=True))
     dp.add_handler(InlineQueryHandler(inline_query))
+    dp.add_handler(CommandHandler('template_with_numbers', send_template_with_numbers, pass_user_data=True))
 
     # log all errors
     dp.add_error_handler(error)

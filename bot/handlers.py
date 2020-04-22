@@ -65,6 +65,17 @@ def text(bot, update, user_data):
         return start(bot=bot, update=update, user_data=user_data)
 
 
+def send_template_with_numbers(bot, update, user_data):
+    if user_data['template_id']:
+        for _text in user_data['count']:
+            user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
+        _send_photo(bot=bot, update=update, user_data=user_data)
+
+        return start(bot=bot, update=update, user_data=user_data)
+    else:
+        update.message.reply_text(text=Common.ERROR)
+
+
 @Common.send_action(ChatAction.UPLOAD_PHOTO)
 def _send_photo(bot, update, user_data):
     img_flip = ImgFlipApi()
