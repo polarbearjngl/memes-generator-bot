@@ -1,6 +1,6 @@
 Pillow
 emoji
 requests
-python-telegram-bot
+python-telegram-bot==11.1.0
 requests-toolbelt
 git+https://github.com/polarbearjngl/chatbase-python
