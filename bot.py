@@ -24,7 +24,7 @@ def run(updater_instance):
 
 
 if __name__ == '__main__':
-    updater = Updater(TOKEN)
+    updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
     conv_handler = ConversationHandler(
