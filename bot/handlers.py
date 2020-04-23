@@ -1,4 +1,6 @@
 # coding=utf-8
+import copy
+
 from telegram import ChatAction
 from bot import Common
 from bot.image_api import ImgFlipApi
@@ -89,18 +91,19 @@ def _send_photo(bot, update, user_data):
         Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
 
 def create_template_with_zones(bot, update, template_id, user_data):
-    user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
-    user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
-    user_data['boxes'] = None
-    user_data['text'] = {}
+    init_user_data = copy.deepcopy(user_data)
+    init_user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
+    init_user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
+    init_user_data['boxes'] = None
+    init_user_data['text'] = {}
 
-    if len(user_data['count']) > 2:
-        user_data['boxes'] = []
-        for i in range(1, len(user_data['count']) + 1):
-            user_data['boxes'].append(dict(text=str(i)))
+    if len(init_user_data['count']) > 2:
+        init_user_data['boxes'] = []
+        for i in range(1, len(init_user_data['count']) + 1):
+            init_user_data['boxes'].append(dict(text=str(i)))
     else:
-        user_data['text'] = {'text0': '1', 'text1': '2'}
+        init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
-    _send_photo(bot=bot, update=update, user_data=user_data)
+    _send_photo(bot=bot, update=update, user_data=init_user_data)
 
-    return start(bot=bot, update=update, user_data=user_data)
+    return start(bot=bot, update=update, user_data=init_user_data)
