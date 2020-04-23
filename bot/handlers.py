@@ -72,16 +72,12 @@ def _send_photo(bot, update, user_data):
                                   boxes=user_data['boxes'],
                                   **user_data['text'])
     print("----------------USER DATA TEXT-----------------")
-    for x in user_data['text']:
-        print(x)
-        for y in user_data['text'][x]:
-            print(y, ':', user_data['text'][x][y])
+    for key, value in user_data['text'].items():
+        print(key, ' : ', value)
 
     print("----------------USER DATA------------------")
-    for x in user_data:
-        print(x)
-        for y in user_data[x]:
-            print(y, ':', user_data[x][y])
+    for key, value in user_data.items():
+        print(key, ' : ', value)
 
     if memes is not None:
         bot.sendPhoto(chat_id=update.message.chat_id, photo=memes)
