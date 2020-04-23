@@ -37,6 +37,17 @@ def photo(bot, update, user_data):
         if template_id:
             create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
+    update.message.reply_text(text=Common.NOT_VALID_PHOTO)
+    Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
+
+    return Common.PHOTO
+
+def photo_get_info(update, user_data):
+    msg = update.effective_message
+    caption = msg.to_dict().get('caption')
+    if caption is not None:
+        template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
+        if template_id:
             user_data['text'], user_data['index'] = {}, None
             user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
             user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
@@ -105,4 +116,4 @@ def create_template_with_zones(bot, update, template_id, user_data):
         init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
     _send_photo(bot=bot, update=update, user_data=init_user_data)
-    return photo(bot=bot, update=update, user_data=user_data)
+    return photo_get_info(update=update, user_data=user_data)
