@@ -44,7 +44,7 @@ def photo(bot, update, user_data):
                 if len(user_data['count']) > 2:
                     user_data['boxes'] = []
                     for i in range(1, len(user_data['count']) + 1):
-                        user_data['boxes'].append(dict(text=i))
+                        user_data['boxes'].append(dict(text=str(i)))
                 else:
                     user_data['text'] = {'text0': '1', 'text1': '2'}
 
