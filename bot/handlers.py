@@ -30,18 +30,35 @@ def inline_query(bot, update):
 def photo(bot, update, user_data):
     msg = update.effective_message
     caption = msg.to_dict().get('caption')
+    template_id_prev = ''
     if caption is not None:
         template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
         if template_id:
-            user_data['text'], user_data['index'] = {}, None
-            user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
-            user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
-            user_data['boxes'] = [{} for _ in range(len(user_data['count']))] if len(user_data['count']) > 2 else None
-            update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
-                                                                   count=user_data['start_count']))
-            Common.add_analytics(update=update, user_data=user_data, message=Common.PHOTO_CMD)
+            if template_id != template_id_prev:
+                template_id_prev = template_id
+                user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
+                user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
 
-            return Common.TEXT
+                if len(user_data['count']) > 2:
+                    user_data['boxes'] = []
+                    for i in range(1, len(user_data['count']) + 1):
+                        user_data['boxes'].append(dict(text=i))
+                else:
+                    user_data['text'] = {'text0': '1', 'text1': '2'}
+
+                _send_photo(bot=bot, update=update, user_data=user_data)
+                Common.send_analytics(user_data=user_data)
+
+            if template_id == template_id_prev:
+                user_data['text'], user_data['index'] = {}, None
+                user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
+                user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
+                user_data['boxes'] = [{} for _ in range(len(user_data['count']))] if len(user_data['count']) > 2 else None
+                update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
+                                                                       count=user_data['start_count']))
+                Common.add_analytics(update=update, user_data=user_data, message=Common.PHOTO_CMD)
+
+                return Common.TEXT
 
     update.message.reply_text(text=Common.NOT_VALID_PHOTO)
     Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
@@ -86,11 +103,3 @@ def _send_photo(bot, update, user_data):
         update.message.reply_text(text=Common.ERROR)
         Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
 
-# @Common.send_action(ChatAction.UPLOAD_PHOTO)
-# def _create_template_zones(bot, update, user_data):
-#     img_flip = ImgFlipApi()
-#     user_data['text'] =
-#
-#     memes = img_flip.create_memes(template_id=user_data['template_id'],
-#                                   boxes=user_data['boxes'],
-#                                   **user_data['text'])
