@@ -38,6 +38,8 @@ def photo(bot, update, user_data):
                 template_id_prev = template_id
                 user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
                 user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
+                user_data['boxes'] = None
+                user_data['text'] = {}
 
                 if len(user_data['count']) > 2:
                     user_data['boxes'] = []
