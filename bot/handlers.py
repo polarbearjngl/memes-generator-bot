@@ -71,9 +71,21 @@ def _send_photo(bot, update, user_data):
     memes = img_flip.create_memes(template_id=user_data['template_id'],
                                   boxes=user_data['boxes'],
                                   **user_data['text'])
+    print("---------------- USER DATA TEXT: " + user_data['text'])
+    print("---------------- USER DATA: " + user_data)
+
     if memes is not None:
         bot.sendPhoto(chat_id=update.message.chat_id, photo=memes)
         Common.add_analytics(update=update, user_data=user_data, message=Common.SEND_PHOTO_EVENT)
     else:
         update.message.reply_text(text=Common.ERROR)
         Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
+
+# @Common.send_action(ChatAction.UPLOAD_PHOTO)
+# def _create_template_zones(bot, update, user_data):
+#     img_flip = ImgFlipApi()
+#     user_data['text'] =
+#
+#     memes = img_flip.create_memes(template_id=user_data['template_id'],
+#                                   boxes=user_data['boxes'],
+#                                   **user_data['text'])
