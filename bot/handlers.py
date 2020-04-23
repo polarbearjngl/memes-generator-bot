@@ -71,8 +71,17 @@ def _send_photo(bot, update, user_data):
     memes = img_flip.create_memes(template_id=user_data['template_id'],
                                   boxes=user_data['boxes'],
                                   **user_data['text'])
-    print("---------------- USER DATA TEXT: " + user_data['text'])
-    print("---------------- USER DATA: " + user_data)
+    print("----------------USER DATA TEXT-----------------")
+    for x in user_data['text']:
+        print(x)
+        for y in user_data['text'][x]:
+            print(y, ':', user_data['text'][x][y])
+
+    print("----------------USER DATA------------------")
+    for x in user_data:
+        print(x)
+        for y in user_data[x]:
+            print(y, ':', user_data[x][y])
 
     if memes is not None:
         bot.sendPhoto(chat_id=update.message.chat_id, photo=memes)
