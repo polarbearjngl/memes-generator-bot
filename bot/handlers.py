@@ -37,9 +37,6 @@ def photo(bot, update, user_data):
         if template_id:
             create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
-    update.message.reply_text(text=Common.NOT_VALID_PHOTO)
-    Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
-
     return Common.PHOTO
 
 def photo_get_info(bot, update, user_data):
