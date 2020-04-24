@@ -37,7 +37,7 @@ def photo(bot, update, user_data):
         if template_id:
             create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
-    return Common.PHOTO
+    return photo_get_info(bot=bot, update=update, user_data=user_data)
 
 def photo_get_info(bot, update, user_data):
     msg = update.effective_message
@@ -113,4 +113,3 @@ def create_template_with_zones(bot, update, template_id, user_data):
         init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
     _send_photo(bot=bot, update=update, user_data=init_user_data)
-    return photo_get_info(bot=bot, update=update, user_data=user_data)
