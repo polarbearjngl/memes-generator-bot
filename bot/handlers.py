@@ -76,14 +76,6 @@ def _send_photo(bot, update, user_data):
     memes = img_flip.create_memes(template_id=user_data['template_id'],
                                   boxes=user_data['boxes'],
                                   **user_data['text'])
-    print("----------------USER DATA TEXT-----------------")
-    for key, value in user_data['text'].items():
-        print(key, ' : ', value)
-
-    print("----------------USER DATA------------------")
-    for key, value in user_data.items():
-        print(key, ' : ', value)
-
     if memes is not None:
         bot.sendPhoto(chat_id=update.message.chat_id, photo=memes)
         Common.add_analytics(update=update, user_data=user_data, message=Common.SEND_PHOTO_EVENT)
