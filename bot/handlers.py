@@ -37,9 +37,22 @@ def photo(bot, update, user_data):
         if template_id:
             create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
-    return photo_get_info(bot=bot, update=update, user_data=user_data)
+            user_data['text'], user_data['index'] = {}, None
+            user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
+            user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
+            user_data['boxes'] = [{} for _ in range(len(user_data['count']))] if len(user_data['count']) > 2 else None
+            update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
+                                                                   count=user_data['start_count']))
+            Common.add_analytics(update=update, user_data=user_data, message=Common.PHOTO_CMD)
 
-def photo_get_info(bot, update, user_data):
+            return Common.TEXT
+
+    update.message.reply_text(text=Common.NOT_VALID_PHOTO)
+    Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
+
+    return Common.PHOTO
+
+def photo(bot, update, user_data):
     msg = update.effective_message
     caption = msg.to_dict().get('caption')
     if caption is not None:
