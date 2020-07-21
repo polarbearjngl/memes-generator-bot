@@ -35,8 +35,8 @@ def photo(bot, update, user_data, is_template_created=False):
     if caption is not None:
         template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
         if template_id:
-            # if not is_template_created:
-            #     create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
+            if not is_template_created:
+                create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
             user_data['text'], user_data['index'] = {}, None
             user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
