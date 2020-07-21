@@ -37,6 +37,14 @@ def photo(bot, update, user_data):
         if template_id:
             create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
+    return photo_get_info(bot=bot, update=update, user_data=user_data)
+
+def photo_get_info(bot, update, user_data):
+    msg = update.effective_message
+    caption = msg.to_dict().get('caption')
+    if caption is not None:
+        template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
+        if template_id:
             user_data['text'], user_data['index'] = {}, None
             user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
             user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
