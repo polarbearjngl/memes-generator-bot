@@ -29,13 +29,13 @@ def inline_query(bot, update):
     update.inline_query.answer(results)
 
 
-def photo(bot, update, user_data, template_created=False):
+def photo(bot, update, user_data, is_template_created=False):
     msg = update.effective_message
     caption = msg.to_dict().get('caption')
     if caption is not None:
         template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
         if template_id:
-            if template_created:
+            if not is_template_created:
                 create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
 
             user_data['text'], user_data['index'] = {}, None
@@ -106,4 +106,4 @@ def create_template_with_zones(bot, update, template_id, user_data):
         init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
     _send_photo(bot=bot, update=update, user_data=init_user_data)
-    photo(bot, update, user_data, template_created=True)
+    photo(bot=bot, update=update, user_data=user_data, is_template_created=True)
