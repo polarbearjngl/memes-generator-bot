@@ -52,27 +52,6 @@ def photo(bot, update, user_data):
 
     return Common.PHOTO
 
-def photo(bot, update, user_data):
-    msg = update.effective_message
-    caption = msg.to_dict().get('caption')
-    if caption is not None:
-        template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
-        if template_id:
-            user_data['text'], user_data['index'] = {}, None
-            user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
-            user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
-            user_data['boxes'] = [{} for _ in range(len(user_data['count']))] if len(user_data['count']) > 2 else None
-            update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
-                                                                   count=user_data['start_count']))
-            Common.add_analytics(update=update, user_data=user_data, message=Common.PHOTO_CMD)
-
-            return Common.TEXT
-
-    update.message.reply_text(text=Common.NOT_VALID_PHOTO)
-    Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
-
-    return Common.PHOTO
-
 
 def text(bot, update, user_data):
     _text = update.effective_message.text
@@ -126,4 +105,4 @@ def create_template_with_zones(bot, update, template_id, user_data):
         init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
     _send_photo(bot=bot, update=update, user_data=init_user_data)
-    return Common.TEXT
+    return photo(bot=bot, update=update, user_data=user_data)
