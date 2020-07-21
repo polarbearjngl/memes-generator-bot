@@ -105,4 +105,4 @@ def create_template_with_zones(bot, update, template_id, user_data):
         init_user_data['text'] = {'text0': '1', 'text1': '2'}
 
     _send_photo(bot=bot, update=update, user_data=init_user_data)
-    return photo(bot=bot, update=update, user_data=user_data)
+    return Common.TEXT
