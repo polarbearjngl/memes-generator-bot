@@ -55,15 +55,15 @@ def text(bot, update, user_data):
     _text = update.effective_message.text
     user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
 
-    if user_data['count']:
+    if _text == '/reset':
+        return start(bot=bot, update=update, user_data=user_data)
+    elif _text == '/help':
+        return call_help(bot=bot, update=update, user_data=user_data)
+    elif user_data['count']:
         update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
                                                                count=user_data['start_count']))
 
         return Common.TEXT
-    elif _text == '/reset':
-        return start(bot=bot, update=update, user_data=user_data)
-    elif _text == '/help':
-        return call_help(bot=bot, update=update, user_data=user_data)
     else:
         _send_photo(bot=bot, update=update, user_data=user_data)
         Common.send_analytics(user_data=user_data)
