@@ -4,8 +4,6 @@ from bot import Common
 from bot.image_api import ImgFlipApi
 from bot.inline_query_result import InlineQueryResults
 
-stored_template_id = None
-
 
 def start(bot, update, user_data):
     """Handler that calling when user send /start"""
@@ -30,14 +28,12 @@ def inline_query(bot, update):
 
 
 def photo(bot, update, user_data):
-    global stored_template_id
-
     msg = update.effective_message
     caption = msg.to_dict().get('caption')
     if caption is not None:
         template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
         if template_id:
-            stored_template_id = template_id
+            create_template_with_zones(bot=bot, update=update, template_id=template_id)
 
             user_data['text'], user_data['index'] = {}, None
             user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
@@ -56,14 +52,7 @@ def photo(bot, update, user_data):
 
 
 def text(bot, update, user_data):
-    global stored_template_id
-
     _text = update.effective_message.text
-
-    if stored_template_id:
-        create_template_with_zones(bot=bot, update=update, template_id=stored_template_id)
-        return Common.TEXT
-
     user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
 
     if user_data['count']:
@@ -71,6 +60,8 @@ def text(bot, update, user_data):
                                                                count=user_data['start_count']))
 
         return Common.TEXT
+    elif _text == Common.RESET or _text == '/reset':
+        return start(bot=bot, update=update, user_data=user_data)
     else:
         _send_photo(bot=bot, update=update, user_data=user_data)
         Common.send_analytics(user_data=user_data)
@@ -92,9 +83,6 @@ def _send_photo(bot, update, user_data):
         Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
 
 def create_template_with_zones(bot, update, template_id):
-    global stored_template_id
-    stored_template_id = None
-
     init_user_data = dict()
     init_user_data['template_id'], init_user_data['start_count'] = template_id[0].id, template_id[0].box_count
     init_user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
