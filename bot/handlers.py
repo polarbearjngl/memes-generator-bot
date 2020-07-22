@@ -54,8 +54,7 @@ def photo(bot, update, user_data):
 def text(bot, update, user_data):
     _text = update.effective_message.text
     user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
-
-    if _text == '/reset':
+    if _text == '/reset' or _text == '/start':
         return start(bot=bot, update=update, user_data=user_data)
     elif _text == '/help':
         return call_help(bot=bot, update=update, user_data=user_data)
