@@ -60,7 +60,7 @@ def text(bot, update, user_data):
 
     _text = update.effective_message.text
     user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
-    if not stored_template_id:
+    if stored_template_id:
         create_template_with_zones(bot=bot, update=update, template_id=stored_template_id)
 
     if user_data['count']:
