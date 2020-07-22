@@ -29,13 +29,13 @@ def inline_query(bot, update):
     update.inline_query.answer(results)
 
 
-def photo(bot, update, user_data, ):
+def photo(bot, update, user_data):
     msg = update.effective_message
     caption = msg.to_dict().get('caption')
     if caption is not None:
         template_id = [m for m in ImgFlipApi().get_memes() if m.name == caption]
         if template_id:
-            create_template_with_zones(bot=bot, update=update, template_id=template_id, user_data=user_data)
+            create_template_with_zones(bot=bot, update=update, template_id=template_id)
 
             user_data['text'], user_data['index'] = {}, None
             user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
@@ -82,9 +82,9 @@ def _send_photo(bot, update, user_data):
         update.message.reply_text(text=Common.ERROR)
         Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
 
-def create_template_with_zones(bot, update, template_id, user_data):
-    init_user_data = copy.deepcopy(user_data)
-    init_user_data['template_id'], user_data['start_count'] = template_id[0].id, template_id[0].box_count
+def create_template_with_zones(bot, update, template_id):
+    init_user_data = dict()
+    init_user_data['template_id'], init_user_data['start_count'] = template_id[0].id, template_id[0].box_count
     init_user_data['count'] = [i for i in range(1, template_id[0].box_count + 1)]
     init_user_data['boxes'] = None
     init_user_data['text'] = {}
