@@ -60,8 +60,10 @@ def text(bot, update, user_data):
                                                                count=user_data['start_count']))
 
         return Common.TEXT
-    elif _text == Common.RESET or _text == '/reset':
+    elif _text == '/reset':
         return start(bot=bot, update=update, user_data=user_data)
+    elif _text == '/help':
+        return call_help(bot=bot, update=update, user_data=user_data)
     else:
         _send_photo(bot=bot, update=update, user_data=user_data)
         Common.send_analytics(user_data=user_data)
