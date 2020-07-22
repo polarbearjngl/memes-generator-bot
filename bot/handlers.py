@@ -58,11 +58,12 @@ def photo(bot, update, user_data):
 def text(bot, update, user_data):
     global stored_template_id
 
+    _text = update.effective_message.text
+
     if stored_template_id:
         create_template_with_zones(bot=bot, update=update, template_id=stored_template_id)
         return Common.TEXT
 
-    _text = update.effective_message.text
     user_data = Common.capture_text_from_user(text=_text, user_data=user_data)
 
     if user_data['count']:
