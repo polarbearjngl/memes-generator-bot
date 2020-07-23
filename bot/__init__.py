@@ -13,8 +13,8 @@ class Common(object):
     RESET = 'reset'
     HELP = 'help'
 
-    BOT_NAME = '@MemeGeneratorForkBot'
-    BOT_LINK = 't.me/MemeGeneratorForkBot'
+    BOT_NAME = '@MemesGeneratorBot'
+    BOT_LINK = 't.me/MemesGeneratorBot'
     START_TEXT = emojize("Чтобы начать создание мема наберите {name}, "
                          "нажмите пробел и выберите шаблон из результатов поиска.\n"
                          ":magnifying_glass_tilted_right: Для поиска определенных мемов по их названию "
