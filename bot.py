@@ -19,8 +19,8 @@ def error(bot, update, context):
 
 
 def run(updater_instance):
-    updater_instance.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-    updater_instance.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
+    updater_instance.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN,
+                                   webhook_url='https://api.telegram.org/bot' + TOKEN)
 
 
 if __name__ == '__main__':

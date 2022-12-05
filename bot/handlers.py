@@ -7,7 +7,6 @@ from bot.inline_query_result import InlineQueryResults
 
 def start(bot, update, user_data):
     """Handler that calling when user send /start"""
-    Common.add_analytics(update=update, user_data=user_data, message=Common.START_OR_RESET_CMD)
     update.message.reply_html(text=Common.START_TEXT)
 
     return Common.PHOTO
@@ -15,7 +14,6 @@ def start(bot, update, user_data):
 
 def call_help(bot, update, user_data):
     """Send a message when the command /help is issued."""
-    Common.add_analytics(update=update, user_data=user_data, message=Common.HELP_CMD)
     update.message.reply_text(Common.HELP_TEXT)
 
 
@@ -41,12 +39,10 @@ def photo(bot, update, user_data):
             user_data['boxes'] = [{} for _ in range(len(user_data['count']))] if len(user_data['count']) > 2 else None
             update.message.reply_text(text=Common.SEND_TEXT.format(num=user_data['count'].pop(0),
                                                                    count=user_data['start_count']))
-            Common.add_analytics(update=update, user_data=user_data, message=Common.PHOTO_CMD)
 
             return Common.TEXT
 
     update.message.reply_text(text=Common.NOT_VALID_PHOTO)
-    Common.add_analytics(update=update, user_data=user_data, message=Common.NOT_VALID_PHOTO_EVENT)
 
     return Common.PHOTO
 
@@ -74,10 +70,9 @@ def _send_photo(bot, update, user_data):
                                   **user_data['text'])
     if memes is not None:
         bot.sendPhoto(chat_id=update.message.chat_id, photo=memes)
-        Common.add_analytics(update=update, user_data=user_data, message=Common.SEND_PHOTO_EVENT)
     else:
         update.message.reply_text(text=Common.ERROR)
-        Common.add_analytics(update=update, user_data=user_data, message=Common.ERROR_EVENT, not_handled=True)
+
 
 def create_template_with_zones(bot, update, template_id):
     init_user_data = dict()

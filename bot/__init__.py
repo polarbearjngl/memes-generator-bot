@@ -18,16 +18,15 @@ class Common(object):
     START_TEXT = emojize("Чтобы начать создание мема наберите {name}, "
                          "нажмите пробел и выберите шаблон из результатов поиска.\n"
                          ":magnifying_glass_tilted_right: Для поиска определенных мемов по их названию "
-                         "вводите текст (english only)", use_aliases=True).format(name=BOT_NAME)
+                         "вводите текст (english only)").format(name=BOT_NAME)
     SEND_TEXT = emojize("Отправьте текст, который будет добавлен в поле №{num} из {count}\n\n"
                         ":warning:Если текст в поле №{num} не нужен, то отправьте  '0' (ноль):warning:\n\n"
-                        ":back:Отправьте /reset чтобы сбросить переданные данные и вернутся к началу",
-                        use_aliases=True)
+                        ":back:Отправьте /reset чтобы сбросить переданные данные и вернутся к началу")
     NOT_VALID_PHOTO = emojize(":prohibited:Необходимо выбирать шаблон из доступных в поиске {name}\n\n" +
-                              START_TEXT, use_aliases=True).format(name=BOT_NAME)
+                              START_TEXT).format(name=BOT_NAME)
     ERROR = emojize(':cry: Во время генерации что-то пошло не так\n'
                     ':crying_cat_face: Либо сервис временно недоступен\n'
-                    ':loudly_crying_face: Либо вы отправили некорректные данные', use_aliases=True)
+                    ':loudly_crying_face: Либо вы отправили некорректные данные')
     HELP_TEXT = emojize("Бот для создания мемов с использованием популярных шаблонов.\n\n"
                         "Позволяет:\n"
                         ":magnifying_glass_tilted_right: - вести поиск среди популярных шаблонов\n"
@@ -40,7 +39,7 @@ class Common(object):
                         "Нажмите на картинку чтобы сразу отправить ее в чат.\n\n"
                         "/start - начать работу с ботом\n"
                         "/reset - сбросить переданные данные и вернутся к старту\n"
-                        "/help - вызов справки\n", use_aliases=True).format(name=BOT_NAME)
+                        "/help - вызов справки\n").format(name=BOT_NAME)
 
     START_OR_RESET_CMD = 'start or reset cmd'
     HELP_CMD = 'help cmd'
